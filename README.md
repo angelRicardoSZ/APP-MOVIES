@@ -1,6 +1,6 @@
 # APP-MOVIES
 
-This app shows the data of movies from the **api**  [the movie database]( https://api.themoviedb.org/3/) using **axios** (a promise-based HTTP client) 
+This app shows the data of movies from the **api**  [the movie database]( https://api.themoviedb.org) using **axios** (a promise-based HTTP client) 
 
 See the demo:  https://angelricardosz.github.io/APP-MOVIES/
 
