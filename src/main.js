@@ -11,8 +11,25 @@ const api = axios.create({
 
 
 // Utils 
+// Lazy loader
+// Creating an instance of an intersection observer
+const lazyLoader = new IntersectionObserver(
+    (entries) =>{
+        entries.forEach((entry)=>{
+            if(entry.isIntersecting) {
+                // get the url
+                const url =entry.target.getAttribute('data-img')
+                // assign it to src
+                //console.log(entry.target)
+                entry.target.setAttribute('src',url)
+            }
+          
+        });
+});
 
-function createMovies(array, container) {
+
+
+function createMovies(array, container, lazyLoad = true) {
     container.innerHTML = "";
     array.forEach(movie => {
         // Select HTML elements
@@ -29,9 +46,21 @@ function createMovies(array, container) {
         const movieImg = document.createElement('img');
         movieImg.classList.add('movie-img');
         movieImg.setAttribute('alt',movie.title);
+        // If lazy load is activate 
         movieImg.setAttribute(
-            'src',
+            lazyLoad ? 'data-img':'src',
             'https://image.tmdb.org/t/p/w300'+ movie.poster_path);
+        // error
+        movieImg.addEventListener('error', ()=>{
+            movieImg.setAttribute(
+                'src',
+                'https://static.platzi.com/static/images/error/img404.png')
+        })    
+
+        // Targeting and element to be observed
+        if (lazyLoad) {
+            lazyLoader.observe(movieImg)
+        }
         movieContainer.appendChild(movieImg)
 
         //trendingPreviewMoviesSectionContainer.appendChild(movieContainer);
@@ -162,7 +191,7 @@ async function getMoviesByCategory(id) {
     const movies = data.results;
     console.log(movies)
     //genericSection.innerHTML = "";
-    createMovies(movies,genericSection)
+    createMovies(movies,genericSection,true)
     // movies.forEach(movie => {
     //     // Select HTML elements
     //     //const trendingPreviewMoviesSectionContainer = document.querySelector('#trendingPreview .trendingPreview-movieList')
