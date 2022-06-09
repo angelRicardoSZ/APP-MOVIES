@@ -47,9 +47,7 @@ function createMovies(array, container, {
         const movieContainer = document.createElement('div');
         // Add a HTML class
         movieContainer.classList.add('movie-container');
-        movieContainer.addEventListener('click', () => {
-            location.hash = '#movie=' + movie.id
-        })
+
         const movieImg = document.createElement('img');
         movieImg.classList.add('movie-img');
         movieImg.setAttribute('alt',movie.title);
@@ -63,13 +61,21 @@ function createMovies(array, container, {
                 'src',
                 'https://static.platzi.com/static/images/error/img404.png')
         })    
-
+        movieImg.addEventListener('click', () => {
+            location.hash = '#movie=' + movie.id
+        })
+        const movieBtn = document.createElement("button")
+        movieContainer.appendChild(movieImg)
+        movieBtn.classList.add("movie-btn")
+        movieBtn.addEventListener("click", ()=> {
+            movieBtn.classList.add("movie-btn--liked")
+        })
         // Targeting and element to be observed
         if (lazyLoad) {
             lazyLoader.observe(movieImg)
         }
-        movieContainer.appendChild(movieImg)
-
+        
+        movieContainer.appendChild(movieBtn)
         //trendingPreviewMoviesSectionContainer.appendChild(movieContainer);
         container.appendChild(movieContainer);
     });
