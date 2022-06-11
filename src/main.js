@@ -35,6 +35,9 @@ function likeMovie(movie) {
     }
     localStorage.setItem('liked_movies',JSON.stringify(likedMovies));
     console.log(localStorage.getItem('liked_movies'));
+    if (location.hash == ''){
+        homePage();
+    }
 }
 
 // Utils 
@@ -421,4 +424,5 @@ function getLikedMovies(){
         clean : true
         });
     console.log(likedMovies)
+
 }
