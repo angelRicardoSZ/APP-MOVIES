@@ -64,6 +64,7 @@ function trendsPage() {
 
     trendingPreviewSection.classList.add('inactive');
     categoriesPreviewSection.classList.add('inactive') 
+    likedMoviesSection.classList.add('inactive');
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
     headerCategoryTitle.innerHTML = 'Trends'
@@ -82,14 +83,16 @@ function homePage() {
     headerTitle.classList.remove('inactive')
     headerCategoryTitle.classList.add('inactive');
     searchForm.classList.remove('inactive');
+
     trendingPreviewSection.classList.remove('inactive');
     categoriesPreviewSection.classList.remove('inactive') 
+    likedMoviesSection.classList.remove('inactive');
     genericSection.classList.add('inactive')
     movieDetailSection.classList.add('inactive')
 
     getTrendingMoviesPreview()
     getCategoriesPreview()
-    
+    getLikedMovies();
     
 }
 
@@ -107,6 +110,7 @@ function movieDetailsPage() {
 
     trendingPreviewSection.classList.add('inactive');
     categoriesPreviewSection.classList.add('inactive') 
+    likedMoviesSection.classList.add('inactive');
     genericSection.classList.add('inactive')
     movieDetailSection.classList.remove('inactive')
     const [_, movieId] = location.hash.split('=');
@@ -125,7 +129,8 @@ function searchPage() {
 
 
     trendingPreviewSection.classList.add('inactive');
-    categoriesPreviewSection.classList.add('inactive') 
+    categoriesPreviewSection.classList.add('inactive')
+    likedMoviesSection.classList.add('inactive'); 
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
 
@@ -143,13 +148,14 @@ function categoriesPage(){
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
     arrowBtn.classList.remove('header-arrow--white');
-
+    
     headerCategoryTitle.classList.remove('inactive');
     searchForm.classList.add('inactive');
 
 
     trendingPreviewSection.classList.add('inactive');
     categoriesPreviewSection.classList.add('inactive') 
+    likedMoviesSection.classList.add('inactive');
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
     const [_,categoryData] = location.hash.split('=') // ['#category', 'id-name']
