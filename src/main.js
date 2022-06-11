@@ -9,6 +9,33 @@ const api = axios.create({
     },
 });
 
+function likedMoviesList(){
+    const item = JSON.parse(localStorage.getItem('liked_movies'));
+    let movies;
+    if(item) {
+        movies = item;
+    } else {
+        movies = {};
+    }
+    return movies
+}
+
+
+function likeMovie(movie) {
+    const likedMovies = likedMoviesList();
+    console.log(likedMovies)
+    // First, we ask if the movie exists
+    if(likedMovies[movie.id]){
+        likedMovies[movie.id] = undefined;
+        console.log("la pelicula ya estaba en localStorage")
+        // remove of localStorage
+    } else{
+        console.log("la pelicula no estaba en localStorage")
+        likedMovies[movie.id] = movie;
+    }
+    localStorage.setItem('liked_movies',JSON.stringify(likedMovies));
+    console.log(localStorage.getItem('liked_movies'));
+}
 
 // Utils 
 // Lazy loader
@@ -67,8 +94,10 @@ function createMovies(array, container, {
         const movieBtn = document.createElement("button")
         movieContainer.appendChild(movieImg)
         movieBtn.classList.add("movie-btn")
+        likedMoviesList()[movie.id] && movieBtn.classList.add("movie-btn--liked")
         movieBtn.addEventListener("click", ()=> {
             movieBtn.classList.add("movie-btn--liked")
+            likeMovie(movie);
         })
         // Targeting and element to be observed
         if (lazyLoad) {
@@ -380,4 +409,16 @@ async function getRelatedMoviesId(id){
     const { data } = await api(`movie/${id}/similar`);
     const relatedMovies = data.results;
     createMovies(relatedMovies, relatedMoviesContainer)
+}
+
+function getLikedMovies(){
+    const likedMovies = likedMoviesList();
+
+    const moviesArray = Object.values(likedMovies)
+    console.log(moviesArray)
+    createMovies(moviesArray, likedMoviesListArticle,  {
+        lazyLoad : true, 
+        clean : true
+        });
+    console.log(likedMovies)
 }
